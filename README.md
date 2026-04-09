@@ -1,38 +1,56 @@
-# cosmeticFront-end
+# API E-commerce - Gestion des produits et commandes
 
-This template should help get you started developing with Vue 3 in Vite.
+## Description
 
-## Recommended IDE Setup
+Cette API permet de gérer une boutique en ligne avec authentification JWT, consultation des produits, passage et suivi des commandes, gestion interne par les employés, ainsi qu’un tableau de statistiques pour les administrateurs.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Elle a été conçue avec **Laravel** et suit une architecture RESTful.
 
-## Recommended Browser Setup
+---
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Fonctionnalités
 
-## Customize configuration
+### Côté client
+- Inscription et connexion avec génération d’un **token JWT**
+- Consultation de la liste des produits disponibles
+- Consultation du détail d’un produit via son **slug**
+- Passage d’une commande avec plusieurs produits et quantités
+- Vérification de l’état d’une commande
+- Annulation d’une commande avant préparation
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### Côté employé
+- Connexion sécurisée
+- Gestion des commandes selon les permissions du rôle
+- Passage d’une commande au statut **préparée / prête à livrer**
 
-## Project Setup
+### Côté administrateur
+- Consultation des statistiques de ventes
+- Produits les plus populaires
+- Répartition des ventes par catégorie
+- Utilisation du **Query Builder Laravel** pour les rapports
 
-```sh
-npm install
-```
+### Côté développeur
+- Collection **Postman** pour tester les endpoints
+- Documentation API via **Swagger / OpenAPI**
 
-### Compile and Hot-Reload for Development
+---
 
-```sh
-npm run dev
-```
+## Technologies utilisées
 
-### Compile and Minify for Production
+- **PHP**
+- **Laravel**
+- **MySQL**
+- **JWT Auth**
+- **Laravel Query Builder**
+- **Postman**
 
-```sh
-npm run build
-```
+---
+
+## Authentification
+
+L’API utilise une authentification basée sur **JWT**.
+
+Après connexion, l’utilisateur reçoit un token à envoyer dans les headers :
+
+```http
+Authorization: Bearer votre_token_jwt
