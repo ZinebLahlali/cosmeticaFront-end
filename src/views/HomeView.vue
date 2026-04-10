@@ -4,13 +4,14 @@ import {ref, onMounted} from 'vue'
 import api from '../services/api'
 
 const commandes = ref([])
+const token = localStorage.getItem('token')
 
 onMounted(async () => {
     try {
         
     const res = await api.get('/mes_Commandes', {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${token}`
         }
     })
     console.log('data:', res.data)
@@ -20,6 +21,26 @@ onMounted(async () => {
     console.log(err.response?.data)
 }
 })
+
+const cancelCommande = async (id) => {
+  message.value = ''
+  error.value = ''
+  
+  try {
+    const res = await api.put(`/commande/{id}/cancel`, {}, {
+      headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+    message.value = res.data.message
+
+    await fetchCommandes()
+  } catch (err) {
+    console.error(err.response?.data)
+    error.value = err.response?.data?.message || 'Erreur lors de l’annulation'
+  }
+}
+      
 </script>
 
 
@@ -81,6 +102,16 @@ onMounted(async () => {
               <p class="mt-1 font-medium text-gray-800">{{ commande.adresse_livraison }}</p>
             </div>
           </div>
+           <button v-if="commande.statut === 'pending'"
+            @click="cancelCommande(commande.id)" 
+             class="mt-4 rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600">
+                Cancle
+            </button>
+              
+               <p v-else-if="commande.statut === 'en_preparation'"
+                class="mt-4 text-sm text-orange-600">
+                Cette commande est en préparation. Vous ne pouvez pas l’annuler.
+              </p>
         </div>
       </div>
     </div>
