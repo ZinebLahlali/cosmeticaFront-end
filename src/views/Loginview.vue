@@ -21,6 +21,7 @@
         console.log(res.data)
 
         router.push('/home')
+       
 
     } catch (err){
         console.log(err.response?.data)
